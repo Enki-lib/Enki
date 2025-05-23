@@ -21,11 +21,11 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function show (User $user) : JsonResponse
+    public function show (User $usuario) : JsonResponse
     {
         return response()-> json([
             'status' => true,
-            'usuario' => $user,
+            'usuario' => $usuario,
         ], 200);
     }
 
@@ -33,7 +33,7 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try  {
-           $user = User::create([
+           $usuario = User::create([
                 'nome' => $request -> nome,
                 'sobrenome' => $request -> sobrenome,
                 'cpf' => $request -> cpf,
@@ -52,7 +52,7 @@ class UserController extends Controller
 
             return response()->json([
             'status' => true,
-            'user' => $user,
+            'user' => $usuario,
             'message' => 'Usuário cadastrado com sucesso',
             ], 201);
 
@@ -65,13 +65,13 @@ class UserController extends Controller
         }
     }
 
-    public function update (UserRequest $request, User $user) : JsonResponse
+    public function update (UserRequest $request, User $usuario) : JsonResponse
     { 
 
         DB::beginTransaction();
 
         try {
-            $user->update([
+            $usuario->update([
                 'nome' => $request -> nome,
                 'sobrenome' => $request -> sobrenome,
                 'cpf' => $request -> cpf,
@@ -90,7 +90,7 @@ class UserController extends Controller
 
             return response() -> json([
                 'status' => true,
-                'user' => $user,
+                'usuario' => $usuario,
                 'message' => 'Usuário editado com sucesso',
             ], 200);
 
@@ -104,14 +104,14 @@ class UserController extends Controller
         
     }
 
-    public function destroy (User $user) : JsonResponse
+    public function destroy (User $usuario) : JsonResponse
     {  
         try {
-            $user->delete();
+            $usuario->delete();
 
             return response() -> json([
                 'status' => true,
-                'user' => $user,
+                'user' => $usuario,
                 'message' => 'Usuário deletado com sucesso'
             ], 200);
 
