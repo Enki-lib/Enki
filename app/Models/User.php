@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -35,6 +35,10 @@ class User extends Authenticatable
         'complemento',
         'estado'
     ];
+
+    public function emprestimos () {
+        return $this->hasMany(Emprestimo::class, 'livro_codigo_livro', 'codigo_livro');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

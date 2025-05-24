@@ -64,7 +64,7 @@ class LivroController extends Controller
                 'exception' => get_class($e),
                 'error' => $e->getMessage(),
                 'trace' => $e->getTrace()
-            ], 500);
+            ], 422);
         }
         
     }

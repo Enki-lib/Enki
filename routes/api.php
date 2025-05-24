@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmprestimoController;
 use App\Http\Controllers\LivroController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,7 @@ Route::delete('/usuarios/excluir/{usuario}', [UserController::class, 'destroy'])
 //* ROTAS DO CRUD DE LIVROS
 
 
- Route::get('/livros', [LivroController::class, 'index']);                         // GET -> 127.0.0.1:8000/api/livros?page=1
+Route::get('/livros', [LivroController::class, 'index']);                         // GET -> 127.0.0.1:8000/api/livros?page=1
 
 Route::get('/livros/{livro}', [LivroController::class, 'show']);                   // GET -> 127.0.0.1:8000/api/livros/<idDoUsuario>
 
@@ -38,3 +39,16 @@ Route::post('/livros/registro', [LivroController::class, 'store']);             
 Route::put('/livros/editar/{livro}', [LivroController::class, 'update']);            // PUT -> 127.0.0.1/api/users/editar/<idDoUsuario>
 
 Route::delete('/livros/excluir/{livro}', [LivroController::class, 'destroy']);      // DELETE -> 127.0.0.1/api/livros/excluir/<idDoLivro>
+
+
+// * ROTAS DO CRUD DE EMPRÉSTIMOS
+
+Route::get('/emprestimos', [EmprestimoController::class, 'index']);
+
+Route::get('/emprestimos/{emprestimo}', [EmprestimoController::class, 'show']);
+
+Route::post('/emprestimos/registro', [EmprestimoController::class, 'store']);
+
+Route::put('/emprestimos/editar/{emprestimo}', [EmprestimoController::class, 'update']);
+
+Route::delete('/emprestimos/excluir/{emprestimo}', [EmprestimoController::class, 'destroy']);
