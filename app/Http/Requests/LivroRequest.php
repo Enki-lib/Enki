@@ -21,14 +21,13 @@ class LivroRequest extends FormRequest
      */
     public function rules(): array
     {
-        $codigo_livro = $this->route('livro');
         return [
-        'id_categoria' => 'required|integer',
-        'titulo_livro' => 'required',
-        'edicao_livro' => 'required',
-        'ano_publicacao' => 'required|date',
-        'assunto' => 'required',
-        'ISBN' => 'required|numeric'
+            'id_categoria' => 'required|integer',
+            'titulo_livro' => 'required',
+            'edicao_livro' => 'required',
+            'ano_publicacao' => 'required|date',
+            'assunto' => 'required',
+            'ISBN' => 'required|numeric'
         ];
     }
 

@@ -1,0 +1,36 @@
+{
+  "livros": [
+    {
+      "titulo": "O Senhor dos Anéis: A Sociedade do Anel",
+      "edicao": "1ª Edição Especial",
+      "data_publicacao": "1954-07-29",
+      "genero": "Fantasia",
+      "descricao": "O primeiro volume da trilogia que narra a jornada de Frodo Bolseiro para destruir o Um Anel e salvar a Terra-média das trevas.",
+      "isbn": "9788533613379"
+    },
+    {
+      "titulo": "1984",
+      "edicao": "Edição de Luxo",
+      "data_publicacao": "1949-06-08",
+      "genero": "Ficção Distópica",
+      "descricao": "Um clássico da literatura que retrata um regime totalitário onde o governo controla todos os aspectos da vida dos cidadãos.",
+      "isbn": "9788522106169"
+    },
+    {
+      "titulo": "Orgulho e Preconceito",
+      "edicao": "Edição Comemorativa",
+      "data_publicacao": "1813-01-28",
+      "genero": "Romance",
+      "descricao": "A história de Elizabeth Bennet e Mr. Darcy, explorando temas de amor, classe social e preconceitos na Inglaterra rural.",
+      "isbn": "9788594318147"
+    },
+    {
+      "titulo": "O Pequeno Príncipe",
+      "edicao": "Edição de Bolso",
+      "data_publicacao": "1943-04-06",
+      "genero": "Literatura Infantil/Filosófica",
+      "descricao": "Uma obra poética que conta a história de um príncipe que viaja por diversos planetas refletindo sobre a natureza humana.",
+      "isbn": "9788572326299"
+    }
+  ]
+}

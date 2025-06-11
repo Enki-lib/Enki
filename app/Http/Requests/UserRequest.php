@@ -33,7 +33,7 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('usuario');
+        $userId = request()->route('usuario');
         return [
             'nome' => 'required',
             'sobrenome' => 'required',
