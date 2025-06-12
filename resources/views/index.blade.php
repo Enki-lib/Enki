@@ -9,6 +9,27 @@
     <style>
         .book-card {
             height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .book-card .card-img-top {
+            height: 250px;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+        .book-card .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .book-card .card-text {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
         }
         .alert {
             display: none;
@@ -100,18 +121,35 @@
             return `
                 <div class="col">
                     <div class="card book-card">
+                        <div class="img-wrapper">
+                            <img src="${book.coverUrl || '/images/no-cover.png'}" class="card-img-top" alt="${book.titulo_livro}">
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title">${book.titulo}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Edição: ${book.edicao}</h6>
-                            <p class="card-text">${book.descricao}</p>
-                            <p class="card-text"><small class="text-muted">Publicado em: ${formatDate(book.data_publicacao)}</small></p>
-                            <div class="d-grid gap-2">
-                                <a href="/livro-detalhes?id=${book.id}" class="btn btn-primary">Ver Detalhes</a>
+                            <h5 class="card-title text-truncate" title="${book.titulo_livro}">${book.titulo_livro}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Edição: ${book.edicao_livro}</h6>
+                            <p class="card-text">${book.assunto}</p>
+                            <p class="card-text"><small class="text-muted">Publicado em: ${formatDate(book.ano_publicacao)}</small></p>
+                            <div class="d-grid gap-2 mt-auto">
+                                <a href="/livro-detalhes?id=${book.codigo_livro}" class="btn btn-primary">Ver Detalhes</a>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
+        }
+
+        // Fetch book cover from Google Books API
+        async function fetchBookCover(isbn) {
+            try {
+                const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`);
+                if (response.data.items && response.data.items[0]?.volumeInfo?.imageLinks?.thumbnail) {
+                    return response.data.items[0].volumeInfo.imageLinks.thumbnail;
+                }
+                return null;
+            } catch (error) {
+                console.error('Error fetching book cover:', error);
+                return null;
+            }
         }
 
         // Load books
@@ -126,24 +164,43 @@
                     url += `?search=${encodeURIComponent(searchTerm)}`;
                 }
                 
+                console.log('Fetching books from:', url);
                 const response = await axios.get(url, {
                     headers: token ? {
                         'Authorization': `Bearer ${token}`
                     } : {}
                 });
                 
+                console.log('API Response:', response.data);
+                
+                if (!response.data.status) {
+                    throw new Error('API returned status false');
+                }
+                
                 const books = response.data.data;
+                
+                if (!Array.isArray(books)) {
+                    throw new Error('Books data is not an array');
+                }
                 
                 if (books.length === 0) {
                     container.innerHTML = '<div class="col-12"><p class="text-center">Nenhum livro encontrado.</p></div>';
                     return;
                 }
+
+                // Fetch book covers for all books
+                const booksWithCovers = await Promise.all(books.map(async (book) => {
+                    const coverUrl = await fetchBookCover(book.ISBN);
+                    return { ...book, coverUrl };
+                }));
                 
-                container.innerHTML = books.map(book => createBookCard(book)).join('');
+                container.innerHTML = booksWithCovers.map(book => createBookCard(book)).join('');
                 
             } catch (error) {
+                console.error('Error loading books:', error);
+                console.error('Error details:', error.response?.data);
                 errorAlert.style.display = 'block';
-                errorAlert.textContent = error.response?.data?.message || 'Erro ao carregar livros.';
+                errorAlert.textContent = error.response?.data?.message || error.message || 'Erro ao carregar livros.';
             }
         }
 

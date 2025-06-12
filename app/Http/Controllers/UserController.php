@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -48,12 +49,22 @@ class UserController extends Controller
                 'estado' => $request -> estado
             ]);
 
+            // Gerar token API
+            $token = Str::random(60);
+            $usuario->api_token = $token;
+            $usuario->save();
+
             DB::commit();
 
             return response()->json([
-            'status' => true,
-            'user' => $usuario,
-            'message' => 'Usuário cadastrado com sucesso',
+                'status' => true,
+                'user' => [
+                    'id' => $usuario->matricula,
+                    'name' => $usuario->nome,
+                    'email' => $usuario->email,
+                ],
+                'token' => $token,
+                'message' => 'Usuário cadastrado com sucesso',
             ], 201);
 
         } catch (Exception $e) {

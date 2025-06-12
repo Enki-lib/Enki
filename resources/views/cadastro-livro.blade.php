@@ -77,7 +77,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        // Check authentication
+        
         function checkAuth() {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -86,13 +86,13 @@
             return token;
         }
 
-        // Logout function
+        
         function logout() {
             localStorage.removeItem('token');
             window.location.href = '/login';
         }
 
-        // Load categories
+        
         async function loadCategories() {
             try {
                 const token = checkAuth();
@@ -112,14 +112,13 @@
                     });
                 }
             } catch (error) {
-                console.error('Error loading categories:', error);
+                console.error('Erro ao buscar categorias:', error);
                 const errorAlert = document.getElementById('errorAlert');
                 errorAlert.style.display = 'block';
                 errorAlert.textContent = 'Erro ao carregar categorias. Por favor, recarregue a página.';
             }
         }
 
-        // Call checkAuth and loadCategories on page load
         checkAuth();
         loadCategories();
 
@@ -150,10 +149,10 @@
                     successAlert.textContent = 'Livro cadastrado com sucesso!';
                     errorAlert.style.display = 'none';
                     
-                    // Clear form
+                    
                     this.reset();
                     
-                    // Redirect after 2 seconds
+                    
                     setTimeout(() => {
                         window.location.href = '/';
                     }, 2000);

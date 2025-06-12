@@ -33,11 +33,12 @@ class User extends Authenticatable
         'bairro',
         'cidade',
         'complemento',
-        'estado'
+        'estado',
+        'api_token'
     ];
 
     public function emprestimos () {
-        return $this->hasMany(Emprestimo::class, 'livro_codigo_livro', 'codigo_livro');
+        return $this->hasMany(Emprestimo::class, 'usuario_matricula_usuario', 'matricula');
     }
 
     /**
@@ -47,7 +48,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'senha',
-        // 'remember_token',
+        'api_token',
     ];
 
     /**
@@ -58,8 +59,38 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            // 'email_verified_at' => 'datetime',
             'senha' => 'hashed',
+            'data_nascimento' => 'date',
         ];
+    }
+
+    /**
+     * Get the column name for the "remember me" token.
+     *
+     * @return string
+     */
+    public function getAuthIdentifierName()
+    {
+        return 'matricula';
+    }
+
+    /**
+     * Get the unique identifier for the user.
+     *
+     * @return mixed
+     */
+    public function getAuthIdentifier()
+    {
+        return $this->getAttribute($this->getAuthIdentifierName());
+    }
+
+    /**
+     * Get the password for the user.
+     *
+     * @return string
+     */
+    public function getAuthPassword()
+    {
+        return $this->senha;
     }
 }
