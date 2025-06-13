@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class EmprestimoController extends Controller
 {
     public function index(): JsonResponse
-    {
+     {
         $emprestimos = Emprestimo::with(['livro', 'usuario'])->get();
         return response()->json([
             'status' => true,

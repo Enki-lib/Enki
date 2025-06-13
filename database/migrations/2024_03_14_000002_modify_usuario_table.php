@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,9 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('usuario', function (Blueprint $table) {
-            $table->string('api_token', 80)->nullable()->unique()->after('senha');
-        });
+        DB::statement('ALTER TABLE usuario MODIFY matricula INT AUTO_INCREMENT');
     }
 
     /**
@@ -21,8 +20,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('usuario', function (Blueprint $table) {
-            $table->dropColumn('api_token');
-        });
+        DB::statement('ALTER TABLE usuario MODIFY matricula INT');
     }
-};
+}; 

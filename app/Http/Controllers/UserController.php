@@ -34,20 +34,21 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try  {
-           $usuario = User::create([
-                'nome' => $request -> nome,
-                'sobrenome' => $request -> sobrenome,
-                'cpf' => $request -> cpf,
-                'data_nascimento' => $request -> data_nascimento,
-                'senha' => $request -> senha,
-                'email' => $request -> email,
-                'rua' => $request -> rua,
-                'numero' => $request -> numero,
-                'bairro' => $request -> bairro,
-                'cidade' => $request -> cidade,
-                'complemento' => $request -> complemento,
-                'estado' => $request -> estado
-            ]);
+            $validated = $request->validated();
+            $usuario = new User();
+            $usuario->nome = $validated['nome'];
+            $usuario->sobrenome = $validated['sobrenome'];
+            $usuario->cpf = $validated['cpf'];
+            $usuario->data_nascimento = $validated['data_nascimento'];
+            $usuario->senha = $validated['senha'];
+            $usuario->email = $validated['email'];
+            $usuario->rua = $validated['rua'];
+            $usuario->numero = $validated['numero'];
+            $usuario->bairro = $validated['bairro'];
+            $usuario->cidade = $validated['cidade'];
+            $usuario->complemento = $validated['complemento'] ?? null;
+            $usuario->estado = $validated['estado'];
+            $usuario->save();
 
             // Gerar token API
             $token = Str::random(60);
@@ -78,24 +79,23 @@ class UserController extends Controller
 
     public function update (UserRequest $request, User $usuario) : JsonResponse
     { 
-
         DB::beginTransaction();
 
         try {
-            $usuario->update([
-                'nome' => $request -> nome,
-                'sobrenome' => $request -> sobrenome,
-                'cpf' => $request -> cpf,
-                'data_nascimento' => $request -> data_nascimento,
-                'senha' => $request -> senha,
-                'email' => $request -> email,
-                'rua' => $request -> rua,
-                'numero' => $request -> numero,
-                'bairro' => $request -> bairro,
-                'cidade' => $request -> cidade,
-                'complemento' => $request -> complemento,
-                'estado' => $request -> estado
-            ]);
+            $validated = $request->validated();
+            $usuario->nome = $validated['nome'];
+            $usuario->sobrenome = $validated['sobrenome'];
+            $usuario->cpf = $validated['cpf'];
+            $usuario->data_nascimento = $validated['data_nascimento'];
+            $usuario->senha = $validated['senha'];
+            $usuario->email = $validated['email'];
+            $usuario->rua = $validated['rua'];
+            $usuario->numero = $validated['numero'];
+            $usuario->bairro = $validated['bairro'];
+            $usuario->cidade = $validated['cidade'];
+            $usuario->complemento = $validated['complemento'] ?? null;
+            $usuario->estado = $validated['estado'];
+            $usuario->save();
 
             DB::commit();
 

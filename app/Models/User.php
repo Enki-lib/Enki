@@ -21,6 +21,14 @@ class User extends Authenticatable
     protected $primaryKey = 'matricula';
     public $incrementing = true;
     public $timestamps = false;
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['matricula'];
+
     protected $fillable = [
         'nome',
         'sobrenome',
@@ -36,6 +44,13 @@ class User extends Authenticatable
         'estado',
         'api_token'
     ];
+
+    /**
+     * The "type" of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'integer';
 
     public function emprestimos () {
         return $this->hasMany(Emprestimo::class, 'usuario_matricula_usuario', 'matricula');
@@ -65,7 +80,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the column name for the "remember me" token.
+     * Get the name of the unique identifier for the user.
      *
      * @return string
      */
@@ -92,5 +107,15 @@ class User extends Authenticatable
     public function getAuthPassword()
     {
         return $this->senha;
+    }
+
+    /**
+     * Get the column name for the "remember me" token.
+     *
+     * @return string
+     */
+    public function getRememberTokenName()
+    {
+        return 'remember_token';
     }
 }

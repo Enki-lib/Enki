@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('usuario', function (Blueprint $table) {
-            $table->string('api_token', 80)->nullable()->unique()->after('senha');
+            $table->string('api_token', 80)->unique()->nullable();
         });
     }
 
@@ -25,4 +25,4 @@ return new class extends Migration
             $table->dropColumn('api_token');
         });
     }
-};
+}; 
